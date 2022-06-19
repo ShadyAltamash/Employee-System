@@ -107,6 +107,9 @@ book_slot_btn.addEventListener("click", (e) => {
 // functionality for booking a work slot
 
 async function bookSlot(DATE) {
+  //check is user enter previous data
+
+  
   if (!DATE) {
     alert("Please choose a date");
     return;
@@ -136,6 +139,11 @@ async function bookSlot(DATE) {
     return;
   }
 
+  if (new Date(DATE) < new Date()) {
+    alert("You can't book a slot in the past");
+    return;
+  }
+
   if (localStorage.getItem("booked") === DATE) {
     alert(
       "You have already booked a slot On this day please choose another day"
@@ -143,21 +151,38 @@ async function bookSlot(DATE) {
     return;
   }
 
+  // first check is the current employee worked on three days in current week
+
   try {
-    console.log(weekOfMonth);
-    const r = await axios.post(
-      `http://localhost:3000/book`,
-      { weekOfMonth, day: days[day] },
-      {
-        headers: {
-          Authorization: `${Cookies.get("token")}`,
-        },
+    const r = await axios.get(`http://localhost:3000/slots/${weekOfMonth}`, {
+      headers: {
+        Authorization: `${Cookies.get("token")}`,
+      },
+    });
+    console.log(r.data.length);
+    let total_working_day = r.data.length;
+    if (total_working_day < 3) {
+      try {
+        console.log(weekOfMonth);
+        const r = await axios.post(
+          `http://localhost:3000/book`,
+          { weekOfMonth, day: days[day] },
+          {
+            headers: {
+              Authorization: `${Cookies.get("token")}`,
+            },
+          }
+        );
+        console.log(r.data);
+        const { message } = r.data;
+        alert(message);
+        localStorage.setItem("booked", DATE);
+      } catch (e) {
+        console.log(e);
       }
-    );
-    console.log(r.data);
-    const { message } = r.data;
-    alert(message);
-    localStorage.setItem("booked", DATE);
+    } else {
+      alert("You have already booked 3 slots in this week");
+    }
   } catch (e) {
     console.log(e);
   }
