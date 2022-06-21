@@ -1,7 +1,7 @@
 async function fetchUserInfo() {
   console.log("Run");
   try {
-    const r = await axios.get(`http://localhost:3000/auth/user`, {
+    const r = await axios.get(`https://employee-system313.herokuapp.com/auth/user`, {
       headers: {
         Authorization: `${Cookies.get("token")}`,
       },

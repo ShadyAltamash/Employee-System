@@ -19,7 +19,7 @@ async function handleCredentialResponse(response) {
   const picture = data.picture;
 
   try {
-    const r = await axios.post("http://localhost:3000/auth", {
+    const r = await axios.post("https://employee-system313.herokuapp.com/auth", {
       email,
       name,
       picture,
@@ -55,7 +55,7 @@ async function auth_intialize() {
     // get data from JWT by decoding it
 
     try {
-      const r = await axios.get("http://localhost:3000/auth/user", {
+      const r = await axios.get("https://employee-system313.herokuapp.com/auth/user", {
         headers: {
           Authorization: `${auth}`,
         },
@@ -154,7 +154,7 @@ async function bookSlot(DATE) {
   // first check is the current employee worked on three days in current week
 
   try {
-    const r = await axios.get(`http://localhost:3000/slots/${weekOfMonth}`, {
+    const r = await axios.get(`https://employee-system313.herokuapp.com/slots/${weekOfMonth}`, {
       headers: {
         Authorization: `${Cookies.get("token")}`,
       },
@@ -165,7 +165,7 @@ async function bookSlot(DATE) {
       try {
         console.log(weekOfMonth);
         const r = await axios.post(
-          `http://localhost:3000/book`,
+          `https://employee-system313.herokuapp.com/book`,
           { weekOfMonth, day: days[day] },
           {
             headers: {
