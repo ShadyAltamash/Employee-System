@@ -79,7 +79,7 @@ async function auth_intialize() {
         Account
       </a>
       <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-        <li><a class="dropdown-item" href="/profile/u">My Profile</a></li>
+        <li><a class="dropdown-item" href="https://shadyaltamash.github.io/Employee-System/profile/u">My Profile</a></li>
       </ul>
     </li>`;
       document.querySelector(".authenticated").classList.remove("d-none");
