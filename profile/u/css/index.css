@@ -1,0 +1,10 @@
+.user__avatar {
+  width: 55px;
+  height: 55px;
+  background-color: #eee;
+  margin-left: auto;
+  margin-right: auto;
+  border-radius: 50%;
+  background-size: cover;
+  background-position: center;
+}
