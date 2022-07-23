@@ -77,7 +77,7 @@ async function auth_intialize() {
       ).innerHTML = `<li class="nav-item dropdown">
       <a
         class="nav-link dropdown-toggle"
-        href="#"
+        href="https://shadyaltamash.github.io/Employee-System/profile/u"
         id="navbarDropdown"
         role="button"
         data-bs-toggle="dropdown"
