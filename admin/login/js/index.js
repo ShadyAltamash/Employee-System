@@ -4,7 +4,7 @@ const adminForm = document.getElementById("admin-form");
 async function Login(email, password) {
   console.log(email, password);
   try {
-    const r = await axios.post(`http://localhost:5000/admin/login`, {
+    const r = await axios.post(`https://employee-system313.herokuapp.com/admin/login`, {
       email,
       password,
     });
