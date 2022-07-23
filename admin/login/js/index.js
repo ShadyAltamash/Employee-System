@@ -24,6 +24,6 @@ adminForm.addEventListener("submit", async (e) => {
   if (token) {
     Cookies.set("token", token);
     Cookies.set("role", "admin");
-    window.location.href = "/";
+    window.location.href = "https://shadyaltamash.github.io/Employee-System";
   }
 });
