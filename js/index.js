@@ -174,7 +174,7 @@ async function bookSlot(DATE) {
       try {
         console.log(weekOfMonth);
         const r = await axios.post(
-          `http://localhost:5000/book`,
+          `https://employee-system313.herokuapp.com/book`,
           { weekOfMonth, day: days[day] },
           {
             headers: {
@@ -232,21 +232,120 @@ window.onload = () => {
   getSlots(weekOfMonth)
     .then((slots) => {
       console.log(slots);
-      slots.forEach((sl) => {
-        slots_table_body.innerHTML += `<tr>
+      slots
+        .filter((sl) => sl.length > 0)
+        .forEach((sl, i) => {
+          console.log(i);
+
+          slots_table_body.innerHTML += `<tr>
        <td>${sl[0]}</td>
        <td>${sl[1]}</td>
        <td>${sl[2]}</td>
        <td>${sl[3]}</td>
        <td>${sl[4]}</td>
        <td>${sl[5]}</td>
-       <td><button class="btn btn-danger ${
+       <td><button class="btn btn-danger delete-btn ${
          Cookies.get("role") !== "admin" && "d-none"
-       }">Delete</button></td>
+       }" id="${i + 2}">Delete</button></td>
       </tr>`;
+        });
+      const buttons = [...document.querySelectorAll(".delete-btn")];
+      console.log(buttons);
+      buttons.forEach((btn) => {
+        btn.addEventListener("click", async (e) => {
+          const id = e.target.id;
+          console.log(id);
+          try {
+            const r = await axios.delete(
+              "https://employee-system313.herokuapp.com/admin/slot/delete/" +
+                id +
+                "/" +
+                weekOfMonth,
+              {
+                headers: {
+                  Authorization: `${Cookies.get("token")}`,
+                },
+              }
+            );
+            console.log(r);
+            if (r.status == 200) {
+              alert("Slot deleted successfully");
+              window.location.reload();
+            }
+          } catch (e) {
+            console.log(e);
+          }
+        });
       });
     })
     .catch((e) => {
       console.log(e);
     });
+  // add delete functionality on buttons
 };
+
+document.querySelector("#week").addEventListener("change", (e) => {
+  let week = e.target.value;
+
+  console.log(week);
+  const slots_table_body = document.querySelector(".slot-table-body");
+  const D = new Date();
+  const date = D.getDate();
+  const day = D.getDay();
+  const weekOfMonth = Math.ceil((date - 1 - day) / 7);
+  week = week === "this week" ? weekOfMonth : week;
+  localStorage.setItem("week", week);
+  slots_table_body.innerHTML = "";
+  getSlots(week)
+    .then((slots) => {
+      console.log(slots);
+      slots
+        .filter((sl) => sl.length > 0)
+        .forEach((sl, i) => {
+          console.log(i);
+
+          slots_table_body.innerHTML += `<tr>
+       <td>${sl[0]}</td>
+       <td>${sl[1]}</td>
+       <td>${sl[2]}</td>
+       <td>${sl[3]}</td>
+       <td>${sl[4]}</td>
+       <td>${sl[5]}</td>
+       <td><button class="btn btn-danger delete-btn ${
+         Cookies.get("role") !== "admin" && "d-none"
+       }" id="${i + 2}">Delete</button></td>
+      </tr>`;
+        });
+      const buttons = [...document.querySelectorAll(".delete-btn")];
+
+      buttons.forEach((btn) => {
+        btn.addEventListener("click", async (e) => {
+          const id = e.target.id;
+          console.log(id);
+          try {
+            const r = await axios.delete(
+              "https://employee-system313.herokuapp.com/admin/slot/delete/" +
+                id +
+                "/" +
+                localStorage.getItem("week"),
+              {
+                headers: {
+                  Authorization: `${Cookies.get("token")}`,
+                },
+              }
+            );
+            console.log(r);
+            if (r.status == 200) {
+              alert("Slot deleted successfully");
+              window.location.reload();
+            }
+          } catch (e) {
+            console.log(e);
+          }
+        });
+      });
+    })
+    .catch((e) => {
+      console.log(e);
+    });
+});
