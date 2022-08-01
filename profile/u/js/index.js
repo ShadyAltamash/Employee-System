@@ -21,7 +21,7 @@ async function fetchUserInfo() {
 async function fetchAdminInfo() {
   console.log("Run");
   try {
-    const r = await axios.get(`http://localhost:5000/admin/me`, {
+    const r = await axios.get(`https://employee-system313.herokuapp.com/admin/me`, {
       headers: {
         Authorization: `${Cookies.get("token")}`,
       },
