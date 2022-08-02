@@ -20,7 +20,7 @@ async function handleCredentialResponse(response) {
 
   try {
     const r = await axios.post(
-      "http://localhost:5000/auth",
+      "https://employee-system313.herokuapp.com/auth",
       {
         email,
         name,
@@ -60,7 +60,7 @@ async function auth_intialize() {
 
     try {
       const r = await axios.get(
-        "http://localhost:5000/auth/user",
+        "https://employee-system313.herokuapp.com/auth/user",
         {
           headers: {
             Authorization: `${auth}`,
@@ -161,7 +161,7 @@ async function bookSlot(DATE) {
 
   try {
     const r = await axios.get(
-      `http://localhost:5000/slots/${weekOfMonth+1}`,
+      `https://employee-system313.herokuapp.com/slots/${weekOfMonth+1}`,
       {
         headers: {
           Authorization: `${Cookies.get("token")}`,
@@ -174,7 +174,7 @@ async function bookSlot(DATE) {
       try {
         console.log(weekOfMonth);
         const r = await axios.post(
-          `http://localhost:5000/book`,
+          `https://employee-system313.herokuapp.com/book`,
           { weekOfMonth, day: days[day] },
           {
             headers: {
@@ -204,7 +204,7 @@ async function getSlots(weekDay) {
  
   try {
     const r = await axios.get(
-      `http://localhost:5000/admin/slots/${(weekDay)}`
+      `https://employee-system313.herokuapp.com/admin/slots/${(weekDay)}`
     );
     return r.data;
   } catch (e) {
@@ -265,7 +265,7 @@ window.onload = () => {
           console.log(id);
           try {
             const r = await axios.delete(
-              "http://localhost:5000/admin/slot/delete/" +
+              "https://employee-system313.herokuapp.com/admin/slot/delete/" +
                 id +
                 "/" +
                 weekOfMonth,
@@ -332,7 +332,7 @@ document.querySelector("#week").addEventListener("change", (e) => {
           console.log(id);
           try {
             const r = await axios.delete(
-              "http://localhost:5000/admin/slot/delete/" +
+              "https://employee-system313.herokuapp.com/admin/slot/delete/" +
                 id +
                 "/" +
                 parseInt(localStorage.getItem("week"))+1,
