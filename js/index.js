@@ -161,7 +161,7 @@ async function bookSlot(DATE) {
 
   try {
     const r = await axios.get(
-      `https://employee-system313.herokuapp.com/slots/${weekOfMonth+1}`,
+      `https://employee-system313.herokuapp.com/slots/${weekOfMonth===0?0:weekOfMonth-1}`,
       {
         headers: {
           Authorization: `${Cookies.get("token")}`,
@@ -175,7 +175,7 @@ async function bookSlot(DATE) {
         console.log(weekOfMonth);
         const r = await axios.post(
           `https://employee-system313.herokuapp.com/book`,
-          { weekOfMonth, day: days[day] },
+          { weekOfMonth:weekOfMonth===0?0:weekOfMonth-1, day: days[day], date: DATE },
           {
             headers: {
               Authorization: `${Cookies.get("token")}`,
@@ -330,12 +330,12 @@ document.querySelector("#week").addEventListener("change", (e) => {
         btn.addEventListener("click", async (e) => {
           const id = e.target.id;
           console.log(id);
+          console.log("inside delete func");
+          let week = +localStorage.getItem("week")===0?0:+localStorage.getItem("week")-1;
           try {
             const r = await axios.delete(
-              "https://employee-system313.herokuapp.com/admin/slot/delete/" +
-                id +
-                "/" +
-                parseInt(localStorage.getItem("week"))=== 0?0:parseInt(localStorage.getItem("week"))-1,
+              `https://employee-system313.herokuapp.com/admin/slot/delete/${id}/${week}`,
+              
               {
                 headers: {
                   Authorization: `${Cookies.get("token")}`,
