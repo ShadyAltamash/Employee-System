@@ -335,7 +335,7 @@ document.querySelector("#week").addEventListener("change", (e) => {
               "https://employee-system313.herokuapp.com/admin/slot/delete/" +
                 id +
                 "/" +
-                parseInt(localStorage.getItem("week"))+1,
+                parseInt(localStorage.getItem("week"))=== 0?0:parseInt(localStorage.getItem("week"))-1,
               {
                 headers: {
                   Authorization: `${Cookies.get("token")}`,
